@@ -19,7 +19,7 @@ alt.themes.enable("dark")
 
 ###########################
 # Load data
-df = pd.read_csv('/Users/Ole/olewelo-Nextcloud/Capstone/Capstone SRI Data Files/Countries/countries_SRI_simplified.csv')
+df = pd.read_csv('countries_SRI_simplified.csv')
 
 
 ###########################
