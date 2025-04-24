@@ -34,8 +34,21 @@ def make_choropleth(input_df, input_id, input_column, input_color_theme):
                                labels={input_column:input_column}
                               )
     choropleth.update_layout(
+        geo=dict(
+            showland=False,
+            showocean=False,
+            showcountries=False,
+            showframe=False,
+            bgcolor='rgba(0,0,0,0)'  # transparent background
+        ),
         margin=dict(l=0, r=0, t=0, b=0),
-        height=350
+        height=500,
+        legend=dict(
+            orientation="h",  # 'v' for vertical, 'h' for horizontal
+            title="SRI Categories",
+            yanchor="bottom",
+            xanchor="auto"
+        )
     )
     return choropleth
 
