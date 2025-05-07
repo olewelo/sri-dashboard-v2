@@ -46,7 +46,8 @@ def make_choropleth():
         locationmode="ISO-3",
         color_discrete_map=SRI_colors,
         category_orders={'SRI_category': SRI_categories},
-        projection="robinson"
+        projection="robinson",
+        custom_data=["COUNTRY", "GID", "REGION", "INCOME GROUP", "SRI", "SRI_category", "coastflood", "rivflood", "watersc", "heatwvs", "pm25", "cyclns"]
     )
     fig.update_layout(
         geo=dict(showland=False, showocean=False, showcountries=False, showframe=False, bgcolor='rgba(0,0,0,0)'),
@@ -59,6 +60,18 @@ def make_choropleth():
             orientation="h", 
             yanchor="top", 
             xanchor="auto")
+    )
+    fig.update_traces(
+        hovertemplate=(
+            "<b>%{customdata[0]}: %{customdata[5]}</b><br>"
+            "<u>SRI:</u> %{customdata[4]:.2f}<br>"
+            "Water Scarcity: %{customdata[8]}<br>"
+            "Riverine Flooding: %{customdata[7]}<br>"
+            "Coastal Flooding: %{customdata[6]}<br>"
+            "Tropical Cyclones: %{customdata[11]}<br>"
+            "Air Pollution: %{customdata[10]}<br>"
+            "Heatwaves: %{customdata[9]}<br>"
+        )
     )
     return fig
 
@@ -165,9 +178,15 @@ with page[1]:
 
 
     # Drop and rename columns
-    df_clean = df.drop(columns=["SOVEREIGN", "CONTINENT", "GID", "INCOME GROUP", "SRI_ncategory", "coastflood", "rivflood", "watersc", "heatwvs", "pm25", "cyclns"], errors="ignore").rename(columns={
+    df_clean = df.drop(columns=["SOVEREIGN", "CONTINENT", "GID", "INCOME GROUP", "SRI_ncategory"], errors="ignore").rename(columns={
         "SRI_category": "SRI Category",
         "REGION": "Region",
+        "coastflood":"Coastal Flooding", 
+        "rivflood":"Riverine Flooding", 
+        "watersc":"Water Scarcity", 
+        "heatwvs":"Heatwaves", 
+        "pm25":"Air Pollution", 
+        "cyclns":"Tropical Cyclones"
     })
 
     # Toggle for sorting

@@ -148,8 +148,16 @@ with tab1:
 # TAB 2 — Hazard validation
 
 with tab2:
-    st.markdown("#### Hazard Data Validation")
-    st.markdown("Lorem impsum blah blah blah.")
+    st.markdown("#### Validation of Climate Hazard Data")
+    st.markdown("""
+                Data sources for climate and weather hazards were selected based on the following criteria:
+                1. publicly available
+                2. sufficient coverage across all countries
+                3. reliable and regularly updated
+                4. comparable across countries
+                5. maintained by a single global source
+                """)
+    st.markdown("All data were validated with additional global climate data sources to confirm areas of exposure. The tables below indicate the percentage of area in each country with missing data for each hazard. Countries with less than 0.5% missing data are excluded.")
 
     # Radio button to select which table to view
     table_choice = st.radio(
