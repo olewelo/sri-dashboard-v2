@@ -17,6 +17,7 @@ st.set_page_config(
 
 st.sidebar.title("School Risk Index Dashboard")
 st.sidebar.markdown("Welcome to the SRI dashboard. Navigate using the menu above.")
+st.sidebar.image("images/I4DI Logo Black.png", width=150)
 st.sidebar.image("images/CUSP Logo Black.png", width=200)
 
 st.title("School Risk Index")
