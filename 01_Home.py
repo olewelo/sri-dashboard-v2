@@ -7,192 +7,67 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
+
 ###########################
 # Page configuration
 st.set_page_config(
     page_title="School Risk Index Dashboard",
     page_icon="🌏",
     layout="wide",
-    initial_sidebar_state="expanded")
+    initial_sidebar_state="expanded"
+    )
 
 st.sidebar.title("School Risk Index Dashboard")
 st.sidebar.markdown("Welcome to the SRI dashboard. Navigate using the menu above.")
 st.sidebar.image("images/I4DI Logo Black.png", width=150)
 st.sidebar.image("images/CUSP Logo Black.png", width=200)
 
-st.title("School Risk Index")
 
 
-###########################
-# Load Data
-df = pd.read_csv("countries_SRI_simplified_inclWBdata.csv")
+st.markdown("<h1 style='text-align: center; font-size: 60px;'>Education at Risk: Mapping Climate Threats to Schools</h1>", unsafe_allow_html=True)
 
-# Define color categories
-SRI_colors = {
-    "Low": "#ebeff1",
-    "Low-Medium": "#F2E8CF",
-    "Medium-High": "#81B29A",
-    "High": "#4C5F70",
-    "Extremely High": "#293241"
-}
-SRI_categories = ["Low", "Low-Medium", "Medium-High", "High", "Extremely High"]
+st.markdown("<div style='height: 62px;'></div>", unsafe_allow_html=True)
 
-# Choropleth map function
-def make_choropleth():
-    fig = px.choropleth(
-        df,
-        locations="GID",
-        color="SRI_category",
-        locationmode="ISO-3",
-        color_discrete_map=SRI_colors,
-        category_orders={'SRI_category': SRI_categories},
-        projection="robinson",
-        custom_data=["COUNTRY", "GID", "REGION", "INCOME GROUP", "SRI", "SRI_category", "coastflood", "rivflood", "watersc", "heatwvs", "pm25", "cyclns"]
-    )
-    fig.update_layout(
-        geo=dict(showland=False, showocean=False, showcountries=False, showframe=False, bgcolor='rgba(0,0,0,0)'),
-        margin=dict(l=0, r=0, t=0, b=0),
-        height=600,
-        legend=dict(
-            title=dict(
-                text="<b>SRI Categories</b>"
-            ), 
-            orientation="h", 
-            yanchor="top", 
-            xanchor="auto")
-    )
-    fig.update_traces(
-        hovertemplate=(
-            "<b>%{customdata[0]}: %{customdata[5]}</b><br>"
-            "<u>SRI:</u> %{customdata[4]:.2f}<br>"
-            "Water Scarcity: %{customdata[8]}<br>"
-            "Riverine Flooding: %{customdata[7]}<br>"
-            "Coastal Flooding: %{customdata[6]}<br>"
-            "Tropical Cyclones: %{customdata[11]}<br>"
-            "Air Pollution: %{customdata[10]}<br>"
-            "Heatwaves: %{customdata[9]}<br>"
-        )
-    )
-    return fig
+st.markdown("""
+            **The climate crisis has a disproportionate and devastating impact on children's education globally.** Since 2022, more than 400 million students globally have been affected by temporary school closures because of climate-related events (World Bank, 2024). 
+            To date, approximately 1 billion children live in areas at risk of extremely strong impacts by the climate crisis (UNICEF, 2021a). 
+            Nevertheless, the impact of climate change on education systems is still frequently overlooked in climate policy agendas around the globe.
+            Partially to blame is the fact that data at the intersection of climate and education is incredibly fragmented, massive data gaps exist, and available data remains underused (e.g., AidData, 2017).
+            
+            This project demonstrates a path to making this data more accessible: The **School Risk Index** takes complex data on climate hazards and measures the exposure schools,
+            globally, face by these hazards. By harmonizing and standardizing this information through a number of
+            steps outlined in detail in the methodology section of this report, the School Risk Index can serve as a
+            simple but powerful indicator of where, globally, schools are most exposed to climate and weather
+            hazards. Its simplicity makes it an attractive tool for decision-makers wishing to better understand school
+            exposure and serves as an example for how existing data at the climate-education intersection can be
+            processed and communicated thoughtfully.
+            
+            The School Risk Index was conceptualized and developed by Ole Siever and Madison Buchholz, graduate students at New York University's [Center for Urban Science and Progress](https://engineering.nyu.edu/research-innovation/centers/cusp) (NYU CUSP), 
+            in collaboration with the [Institute for Development Impact](https://i4di.org) (I4DI).
+""")
 
 
-###########################
-# Tabs to navigate between map and other data
-page = st.tabs(["MAP", "CONTEXTUAL DATA"])
 
+st.markdown("""
+    <hr style="margin-top:48px; margin-bottom:32px;">
 
-###########################
-# Map page
-with page[0]:
-    st.plotly_chart(make_choropleth(), use_container_width=True, key="map_intro")
+    <div style="display: flex; justify-content: center; align-items: center; gap: 60px; flex-wrap: wrap;">
 
+    <div style="display: flex; align-items: center; gap: 16px;">
+        <img src="https://olewelo.thegood.cloud/apps/files_sharing/publicpreview/j4RZ26SbKEqt2AY?file=/&fileId=8060&x=3024&y=1964&a=true&etag=1f2e4c08aba95fd7cf63e1188984a9bd" alt="Ole Siever" style="width:100px; height:100px; object-fit:cover; border-radius:50%; border:2px solid #ccc;">
+        <div>
+        <b>Ole Siever</b><br>
+        <a href="mailto:ole.siever@nyu.edu">ole.siever@nyu.edu</a>
+        </div>
+    </div>
 
-###########################
-# Context Page
-with page[1]:
+    <div style="display: flex; align-items: center; gap: 16px;">
+        <img src="https://olewelo.thegood.cloud/apps/files_sharing/publicpreview/GBcgPxNZ3DNoNi9?file=/&fileId=8079&x=3024&y=1964&a=true&etag=1e09a35a5abf31d2dfac82934e492370" alt="Madison Buchholz" style="width:100px; height:100px; object-fit:cover; border-radius:50%; border:2px solid #ccc;">
+        <div>
+        <b>Madison Buchholz</b><br>
+        <a href="mailto:madison.buchholz@nyu.edu">madison.buchholz@nyu.edu</a>
+        </div>
+    </div>
 
-# === Charts ===
-
-    st.markdown("<h5 style='margin-top:0rem;'>Distribution Overview</h5>", unsafe_allow_html=True)
-
-    # Prepare data
-    df["REGION"] = df["REGION"].str.strip().str.title()
-    df_bar = df.groupby(["REGION", "SRI_category"]).size().reset_index(name="count")
-    df_bar = df_bar.pivot(index="REGION", columns="SRI_category", values="count").fillna(0)
-    df_bar_pct = df_bar.div(df_bar.sum(axis=1), axis=0).reset_index()
-    df_melted = df_bar_pct.melt(id_vars="REGION", var_name="SRI Category", value_name="Percentage")
-
-    df["INCOME GROUP"] = df["INCOME GROUP"].str.strip().str.title()
-    df_income = df.groupby(["INCOME GROUP", "SRI_category"]).size().reset_index(name="count")
-    df_income = df_income.pivot(index="INCOME GROUP", columns="SRI_category", values="count").fillna(0)
-    df_income_pct = df_income.div(df_income.sum(axis=1), axis=0).reset_index()
-    df_income_melted = df_income_pct.melt(id_vars="INCOME GROUP", var_name="SRI Category", value_name="Percentage")
-
-    # Create side-by-side subplot
-    fig = make_subplots(
-        rows=1, cols=2,
-        shared_yaxes=True,
-        horizontal_spacing=0.08,
-        subplot_titles=("SRI Distribution by Region", "SRI Distribution by Income Group")
-    )
-
-    # Region bars (left)
-    for category in SRI_categories:
-        data = df_melted[df_melted["SRI Category"] == category]
-        fig.add_trace(
-            go.Bar(
-                x=data["REGION"],
-                y=data["Percentage"],
-                name=category,
-                marker=dict(color=SRI_colors[category]),
-                legendgroup=category,
-                legendrank=SRI_categories.index(category)
-            ),
-            row=1, col=1
-        )
-
-    # Income bars (right)
-    for category in SRI_categories:
-        data = df_income_melted[df_income_melted["SRI Category"] == category]
-        fig.add_trace(
-            go.Bar(
-                x=data["INCOME GROUP"],
-                y=data["Percentage"],
-                name=category,
-                marker=dict(color=SRI_colors[category]),
-                legendgroup=category,
-                legendrank=SRI_categories.index(category),
-                showlegend=False  # Only show once
-            ),
-            row=1, col=2
-        )
-
-    # Final layout tweaks
-    fig.update_layout(
-        barmode="stack",
-        height=500,
-        yaxis_tickformat=".0%",
-        margin=dict(t=60, b=60),
-        xaxis_tickangle=-45,
-        xaxis2_tickangle=-45,
-        xaxis=dict(title="", showticklabels=True),
-        xaxis2=dict(title="", showticklabels=True),
-        yaxis=dict(range=[0, 1]),
-        legend=dict(
-            title='SRI Categories',
-            orientation="h",
-            yanchor="bottom",
-            y=1.12,
-            xanchor="center",
-            x=0.5
-        )
-    )
-
-    # Display
-    st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
-
-
-    # === Table ===
-
-    st.markdown("<h5 style='margin-top:0rem;'>Country-Level Data</h5>", unsafe_allow_html=True)
-
-
-    # Drop and rename columns
-    df_clean = df.drop(columns=["SOVEREIGN", "CONTINENT", "GID", "INCOME GROUP", "SRI_ncategory"], errors="ignore").rename(columns={
-        "SRI_category": "SRI Category",
-        "REGION": "Region",
-        "coastflood":"Coastal Flooding", 
-        "rivflood":"Riverine Flooding", 
-        "watersc":"Water Scarcity", 
-        "heatwvs":"Heatwaves", 
-        "pm25":"Air Pollution", 
-        "cyclns":"Tropical Cyclones"
-    })
-
-    # Toggle for sorting
-    sort_order = st.radio("Sort by:", ["Sort SRI ↓", "Sort SRI ↑"], horizontal=True, label_visibility='collapsed')
-    ascending = sort_order == "Sort SRI ↑"
-
-    df_sorted = df_clean.sort_values(by="SRI", ascending=ascending)
-
-    st.dataframe(df_sorted.reset_index(drop=True), use_container_width=True)
+    </div>
+""", unsafe_allow_html=True)

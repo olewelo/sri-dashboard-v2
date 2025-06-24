@@ -18,15 +18,83 @@ st.sidebar.image("images/CUSP Logo Black.png", width=200)
 
 st.title("School Risk Index: Hazard Data")
 
+
 # ===========================
 # TABS
-tab1, tab2 = st.tabs(["OVERVIEW", "DATA VALIDATION"])
+tab1, tab2 = st.tabs(["OVERVIEW", "HAZARD MAPS"])
+
 
 # ===========================
-# TAB 1 — Hazard maps
+# TAB 1 — OVERVIEW
 
 with tab1:
-    st.markdown("#### Overview of Hazard Data")
+    st.markdown("""
+                The School Risk Index uses six climate and weather hazards to measure the exposure of schools globally. These hazards were selected based on their relevance to education systems and impact on school operations, as well as the following criteria pertaining to the data being:
+                1. publicly available;
+                2. global in scope;
+                3. reliable and regularly updated;
+                4. comparable across countries;
+                5. maintained by a single global source.
+                """)
+    st.markdown("""
+                Given data availability challenges and the limited resources of this project, the hazards included in the School Risk Index are by no means exhaustive.
+                For each hazard, exposure thresholds were calculated based on a review of relevant literature (see the [Methodology Paper](https://drive.google.com/file/d/1KcqDYsxFOzbaQK7IcdecrTtaV3MrA-Y5/view?usp=share_link) for details). 
+                All data sources were validated with additional global climate data sources to confirm areas of exposure.
+                Please refer to the table below for an overview of the hazards included, their data sources, and respective exposure thresholds.
+                For a detailed description of the data preparation and exposure calculation process, please refer to the [Methodology Paper](https://drive.google.com/file/d/1KcqDYsxFOzbaQK7IcdecrTtaV3MrA-Y5/view?usp=share_link).
+                """)
+
+
+    st.markdown("""
+    <table>
+        <thead>
+            <tr>
+                <th>Hazard</th>
+                <th>Data Source</th>
+                <th>Exposure Threshold</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Water Scarcity</td>
+                <td><a href="https://www.wri.org/data/aqueduct-global-maps-40-data" target="_blank">WRI Aqueduct Water Risk Atlas 4.0</a></td>
+                <td>Composite indicator: Average score 2+ of baseline water stress, seasonal variability, interannual variability, groundwater table decline, and drought risk</td>
+            </tr>
+            <tr>
+                <td>Riverine Flooding</td>
+                <td><a href="https://www.wri.org/data/aqueduct-global-maps-40-data" target="_blank">WRI Aqueduct Water Risk Atlas 4.0</a></td>
+                <td>High or Very High Risk</td>
+            </tr>
+            <tr>
+                <td>Coastal Flooding</td>
+                <td><a href="https://www.wri.org/data/aqueduct-global-maps-40-data" target="_blank">WRI Aqueduct Water Risk Atlas 4.0</a></td>
+                <td>High or Very High Risk</td>
+            </tr>
+            <tr>
+                <td>Tropical Cyclones</td>
+                <td><a href="https://giri.unepgrid.ch/map?list=explore&view=MX-UG0KA-OIQSJ-FIMNA" target="_blank">CDRI Tropical Cyclone Wind - 100yr Return Period</a></td>
+                <td>119 km/h, 178 km/h (geometric mean)</td>
+            </tr>
+            <tr>
+                <td>Air Pollution</td>
+                <td><a href="https://sites.wustl.edu/acag/datasets/surface-pm2-5/" target="_blank">ACAG Satellite-derived PM2.5 Concentrations</a></td>
+                <td>μg/m³, 35μg/m³ (arithmetic mean)</td>
+            </tr>
+            <tr>
+                <td>Heatwaves</td>
+                <td><a href="https://berkeleyearth.org/data/" target="_blank">Berkeley Earth Global Gridded Temperature Data</a></td>
+                <td>9 average annual heatwaves from 2000-2024</td>
+            </tr>
+        </tbody>
+    </table>
+    """, unsafe_allow_html=True)
+
+
+# ===========================
+# TAB 2 — Hazard maps
+
+with tab2:
+    st.markdown("##### Hazard Maps")
     st.markdown("The maps below show the global hazard rasters used to overlay with the school location data. The first map is an overlay of all six hazard rasters. Switch between rasters using the toggles above the map.")
 
     # Radio button to select layer
@@ -143,51 +211,3 @@ with tab1:
             caption="Due to its different cell size, the heatwaves raster can only be displayed as a static image on this dashboard."
         )
 
-
-# ===========================
-# TAB 2 — Hazard validation
-
-with tab2:
-    st.markdown("#### Validation of Climate Hazard Data")
-    st.markdown("""
-                Data sources for climate and weather hazards were selected based on the following criteria:
-                1. publicly available
-                2. sufficient coverage across all countries
-                3. reliable and regularly updated
-                4. comparable across countries
-                5. maintained by a single global source
-                """)
-    st.markdown("All data were validated with additional global climate data sources to confirm areas of exposure. The tables below indicate the percentage of area in each country with missing data for each hazard. Countries with less than 0.5% missing data are excluded.")
-
-    # Radio button to select which table to view
-    table_choice = st.radio(
-        "Select a hazard to view:",
-        ["Water Scarcity", "Riverine & Coastal Flooding", "Tropical Cyclones", "Air Pollution", "Heatwaves"],
-        horizontal=True
-    )
-
-    # Define CSV file paths (adjust filenames if needed)
-    table_files = {
-        "Water Scarcity": "data/climate validation/waterscarcity_missing.csv",
-        "Riverine & Coastal Flooding": "data/climate validation/coastalflooding_missing.csv",
-        "Air Pollution": "data/climate validation/AQ_missing.csv"
-    }
-
-    # If the selected table has a CSV file, load and display
-    if table_choice in table_files:
-        try:
-            df = pd.read_csv(table_files[table_choice])
-
-            # Drop unnamed first column if it exists
-            if df.columns[0].lower().startswith("unnamed"):
-                df = df.drop(columns=df.columns[0])
-            
-            # Sort by "Missing (%)" column if it exists
-            if "Missing (%)" in df.columns:
-                df = df.sort_values(by="Missing (%)", ascending=False)
-
-            st.dataframe(df.reset_index(drop=True), use_container_width=True)
-        except Exception as e:
-            st.error(f"Error loading data: {e}")
-    else:
-        st.info("No missing data - the data source covers the globe fully.")

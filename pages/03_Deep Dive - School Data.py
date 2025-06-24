@@ -40,7 +40,11 @@ tab1, tab2, tab3 = st.tabs(["OVERVIEW", "INTERACTIVE COUNTRY EXPLORER", "DATA VA
 
 with tab1:
     st.markdown("#### Overview of School Coverage")
-    st.markdown("The map below shows a simplified overview of the distribution of schools included in the data. The total number of schools included is >1.3 million. To explore individual schools, please switch to the 'Interactive Country Explorer' tab.")
+    st.markdown("""
+                School location data was retrieved from [OpenStreetMap](https://www.openstreetmap.org/), the currently most comprehensive source of school locations wordwide publicly available. 
+                The map below shows a simplified overview of the distribution of schools included in the data. The total number of schools included in the School Risk Index is 1.34 million. 
+                To explore individual schools, please switch to the 'Interactive Country Explorer' tab. For a detailed description of the data processing steps, please refer to the [Methodology Paper](https://drive.google.com/file/d/1KcqDYsxFOzbaQK7IcdecrTtaV3MrA-Y5/view?usp=share_link).
+    """)
 
     with open("images/schools_overview.html", "r") as f:
         html = f.read()
@@ -123,7 +127,7 @@ with tab3:
         "The SRI's school location data was validated to measure quality using a stratified sample " \
         "of countries, selected across regions and income groups. Two countries per stratum were " \
         "chosen—one with a high, one with a low number of schools relative to the country's child " \
-        "population—based on data availability. The SRI data's total number of schools in each sample countries was " \
+        "population—based on data availability. The SRI data's total number of schools in each sample country was " \
         "compared to official government data on school numbers to assess the quality of the SRI school coverage.")
 
     # Load Data
