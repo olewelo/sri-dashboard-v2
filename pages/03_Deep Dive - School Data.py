@@ -54,6 +54,9 @@ with tab1:
 # ===========================
 # TAB 2 — Filter by Country
 
+# Mapbox API key
+pdk.settings.mapbox_api_key = st.secrets["MAPBOX_API_KEY"]
+
 with tab2:
     st.markdown("#### Explore Individual Schools by Country")
     st.markdown("Use the drop-down menu below to select a country of interest. This displays all schools in that country that are included in our data. Hover over a school point to display a pop-up with contextual information.")
