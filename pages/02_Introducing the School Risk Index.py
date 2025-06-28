@@ -118,7 +118,7 @@ with page[1]:
                 For each hazard, global datasets were used to determine whether a school's location met or exceeded established exposure thresholds. 
                 Exposure levels were then aggregated both relatively and absolutely to the country level. Using a sequence of mathematical transformations, 
                 a composite exposure score between 0 and 10 was calculated for each country, taking into account variability in school density and data quality.
-                The transformation process follows the procedure recommended in the Global INFORM model for risk indices. 
+                The transformation process follows the procedure recommended in the [Global INFORM model for risk indices](https://op.europa.eu/en/publication-detail/-/publication/b1ef756c-5fbc-11e7-954d-01aa75ed71a1/language-en). 
                 For a detailed description of the individual calculation and transformation steps, please refer to the [Methodology Paper](https://drive.google.com/file/d/1KcqDYsxFOzbaQK7IcdecrTtaV3MrA-Y5/view?usp=share_link).
     """)
 
