@@ -135,6 +135,37 @@ with page[1]:
                 - Extremely High: 7.1-10
     """)
 
+    st.markdown("##### Limitations")
+
+    st.markdown("""
+                There are a number of limitations, both in terms of the data used and methodology employed, that should
+                be highlighted. Importantly, the school location data retrieved from OpenStreetMap (OSM)—while being the most comprehensive
+                source available—only covers a fraction of the world's schools—with considerable differences in coverage across
+                regions and income groups. The School Risk Index' methodology takes steps to account for this by
+                reducing disproportionate influences of over- and underrepresentation through combining absolute and
+                relative observations, logarithmically transforming values and scaling them. Nevertheless, this imbalance
+                in coverage across regions and income groups should be kept in mind when reviewing the results.
+    """)
+
+    st.markdown("""
+                For future iterations and expansions of the School Risk Index, we recommend periodically retrieving the
+                most up-to-date OSM raw data as additional schools are mapped. An additional step to reducing the
+                impact of coverage imbalances we suggest is to expand the cross-validation with government data to more
+                countries or, if possible, all countries. This would allow for the introduction of weights based on the
+                coverage level for each country to further reduce the influence of disproportionate levels of coverage.
+    """)
+
+
+    st.markdown("""
+                The most direct impact on School Risk Index values stems from the climate hazard indicators included in
+                the index. As elaborated in the Hazard Data section, these indicators were selected based on relevance to schools
+                and education, global coverage, and availability. An adjustment of these indicators may yield significantly different results. 
+                Moreover, while covering a wide range, they of course do not cover all possible threats faced by schools from climate change. 
+                While this is also not the aim of this index, or any index, it should nevertheless be highlighted. For future iterations of
+                the School Risk Index, we nevertheless recommend the inclusion of additional hazard indicators—most
+                importantly, data on storms besides tropical cyclones, which this inaugural iteration of the School Risk
+                Index does not include due to resource constraints.
+    """)
 
 ###########################
 # Context Page

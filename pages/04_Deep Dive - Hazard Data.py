@@ -38,7 +38,7 @@ with tab1:
                 """)
     st.markdown("""
                 Given data availability challenges and the limited resources of this project, the hazards included in the School Risk Index are by no means exhaustive.
-                For each hazard, exposure thresholds were calculated based on a review of relevant literature (see the [Methodology Paper](https://drive.google.com/file/d/1KcqDYsxFOzbaQK7IcdecrTtaV3MrA-Y5/view?usp=share_link) for details). 
+                For each hazard, exposure thresholds were calculated based on a review of relevant literature. 
                 All data sources were validated with additional global climate data sources to confirm areas of exposure.
                 Please refer to the table below for an overview of the hazards included, their data sources, and respective exposure thresholds.
                 For a detailed description of the data preparation and exposure calculation process, please refer to the [Methodology Paper](https://drive.google.com/file/d/1KcqDYsxFOzbaQK7IcdecrTtaV3MrA-Y5/view?usp=share_link).
