@@ -29,10 +29,10 @@ st.markdown("<h1 style='text-align: center; font-size: 60px;'>Education at Risk:
 st.markdown("<div style='height: 62px;'></div>", unsafe_allow_html=True)
 
 st.markdown("""
-            **The climate crisis has a disproportionate and devastating impact on children's education globally.** Since 2022, more than 400 million students globally have been affected by temporary school closures because of climate-related events (World Bank, 2024). 
-            To date, approximately 1 billion children live in areas at risk of extremely strong impacts by the climate crisis (UNICEF, 2021a). 
+            **The climate crisis has a disproportionate and devastating impact on children's education globally.** Since 2022, more than 400 million students globally have been affected by temporary school closures because of climate-related events ([World Bank, 2024](https://openknowledge.worldbank.org/entities/publication/17ee7c0c-d176-4061-a871-1aea8568f30e)). 
+            To date, approximately 1 billion children live in areas at risk of extremely strong impacts by the climate crisis ([UNICEF, 2021](https://www.unicef.org/media/105376/file/UNICEF-climate-crisis-child-rights-crisis.pdf)). 
             Nevertheless, the impact of climate change on education systems is still frequently overlooked in climate policy agendas around the globe.
-            Partially to blame is the fact that data at the intersection of climate and education is incredibly fragmented, massive data gaps exist, and available data remains underused (e.g., AidData, 2017).
+            Partially to blame is the fact that data at the intersection of climate and education is incredibly fragmented, massive data gaps exist, and available data remains underused (e.g., [AidData, 2017](https://docs.aiddata.org/ad4/pdfs/avoiding_data_graveyards_full_report.pdf)).
             
             This project demonstrates a path to making this data more accessible: The **School Risk Index** takes complex data on climate hazards and measures the exposure schools,
             globally, face by these hazards. By harmonizing and standardizing this information through a number of
@@ -41,6 +41,8 @@ st.markdown("""
             hazards. Its simplicity makes it an attractive tool for decision-makers wishing to better understand school
             exposure and serves as an example for how existing data at the climate-education intersection can be
             processed and communicated thoughtfully.
+
+            **It should be noted that, due to the time and resources available to us, this first iteration of the School Risk Index does not include vulnerability and capacity indicators—both of which are critical to holistically measuring risk. The current version should therefore be viewed primarily as an exposure measure. However, the index was intentionally designed to be a flexible framework that can easily be expanded in future iterations to include these additional dimensions.**
             
             The School Risk Index was conceptualized and developed by Ole Siever and Madison Buchholz, graduate students at New York University's [Center for Urban Science and Progress](https://engineering.nyu.edu/research-innovation/centers/cusp) (NYU CUSP), 
             in collaboration with the [Institute for Development Impact](https://i4di.org) (I4DI).

@@ -95,7 +95,7 @@ with tab1:
 
 with tab2:
     st.markdown("##### Hazard Maps")
-    st.markdown("The maps below show the global hazard rasters used to overlay with the school location data. The first map is an overlay of all six hazard rasters. Switch between rasters using the toggles above the map.")
+    st.markdown("The maps below display the calculated global hazard exposure rasters used to overlay with the school location data. The first map is an overlay of all six hazard rasters. Switch between rasters using the toggles above the map.")
 
     # Radio button to select layer
     layer_choice = st.radio(
@@ -115,6 +115,7 @@ with tab2:
     }
 
     # === LEGEND HTML ===
+    # Using HTML to create a proper legend that switches based on the layer choice
 
     if layer_choice == "OVERLAY":
         legend_md = """
@@ -181,16 +182,18 @@ with tab2:
         </div>
         """
 
-    # Render the legend with padding below only
+    # Rendering the legend
     st.markdown(
         f"<div style='margin-bottom: 20px;'>{legend_md}</div>",
         unsafe_allow_html=True
     )
 
+
     # === CONDITIONAL DISPLAY ===
+    # Displaying a static image for heatwaves, and a folium map for all other layers
+    # Note: The heatwaves raster cannot be displayed as a dynamic layer because of its different cell size, which is why we provide a static instead
 
     if layer_choice != "Heatwaves":
-        # Folium map for other layers
         m = folium.Map(location=[0, 0], zoom_start=1.5, tiles="CartoDB positron", control_scale=True)
 
         folium.TileLayer(
@@ -204,7 +207,6 @@ with tab2:
         st_folium(m, height=600, use_container_width=True)
 
     else:
-        # Static image for Heatwaves
         st.image(
             "images/heatwaves.png",
             use_container_width=True,

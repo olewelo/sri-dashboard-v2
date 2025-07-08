@@ -25,10 +25,10 @@ st.title("Introducing the School Risk Index")
 
 st.markdown("""
             The **School Risk Index (SRI)** is a comprehensive measure that quantifies the exposure of schools to various climate and weather hazards.
-            The calculation methodology of the School Risk Index is inspired by UNICEF's [Children's Climate Risk Index](https://data.unicef.org/resources/childrens-climate-risk-index-report/?_gl=1*bg3k28*_gcl_au*MTEwNTQ1ODk2Ni4xNzQ1NjI2NDk4*_ga*NzM5NTQ4MjIyLjE3Mzc0NzYyNjQ.*_ga_P0DMSZ8KY6*czE3NTA3MDE3MTgkbzEwJGcwJHQxNzUwNzAxNzIyJGo1NiRsMCRoMA..*_ga_ZEPV2PX419*czE3NTA3MDE3MTgkbzEwJGcwJHQxNzUwNzAxNzE4JGo2MCRsMCRoMA..), 
+            The calculation methodology of the index is inspired by UNICEF's [Children's Climate Risk Index](https://data.unicef.org/resources/childrens-climate-risk-index-report/?_gl=1*bg3k28*_gcl_au*MTEwNTQ1ODk2Ni4xNzQ1NjI2NDk4*_ga*NzM5NTQ4MjIyLjE3Mzc0NzYyNjQ.*_ga_P0DMSZ8KY6*czE3NTA3MDE3MTgkbzEwJGcwJHQxNzUwNzAxNzIyJGo1NiRsMCRoMA..*_ga_ZEPV2PX419*czE3NTA3MDE3MTgkbzEwJGcwJHQxNzUwNzAxNzE4JGo2MCRsMCRoMA..), 
             with adaptions made to reflect the School Risk Index' distinct focus on schools.
             Exposure to the climate hazards listed below was calculated for over 1.3M individual schools globally. 
-            Their locations were retrieved from the community mapping platform [OpenStreetMap](https://www.openstreetmap.org/)—currently the by far most comprehensive source of school locations publicly available.
+            Their locations were retrieved from the community mapping platform [OpenStreetMap](https://www.openstreetmap.org/)—currently by far the most comprehensive source of school locations publicly available.
             As a composite index, the School Risk Index is built to easily be expanded, particularly by vulnerability and capacity indicators crucial to holistically measure risk.
 """)
 
@@ -89,22 +89,24 @@ def make_choropleth():
     return fig
 
 
-###########################
-# Tabs to navigate between map and other data
-page = st.tabs(["SCHOOL RISK INDEX MAP", "METHODOLOGY", "CONTEXTUAL DATA"])
+# ===========================
+# TABS
+page = st.tabs(["SCHOOL RISK INDEX MAP", "METHODOLOGY & LIMITATIONS", "CONTEXTUAL DATA"])
 
 
-###########################
-# Map page
+# ===========================
+# TAB 1 — SRI map
+
 with page[0]:
     st.markdown("""
-            The map below visualizes the School Risk Index for all countries included in the model. Hover over a country to see its School Risk Index and the exposure of schools to the six climate hazards included in the model.
+            The map below visualizes the School Risk Index values for all countries included in the model. Hover over a country to see its School Risk Index and the exposure of schools to the six climate hazards included in the model.
     """)
     st.plotly_chart(make_choropleth(), use_container_width=True, key="map_intro")
 
 
-###########################
-# Methodology page
+# ===========================
+# TAB 2 – Methodology & Limitations
+
 with page[1]:
 
     st.markdown("##### A Brief Methodology Overview")
@@ -140,7 +142,7 @@ with page[1]:
     st.markdown("""
                 There are a number of limitations, both in terms of the data used and methodology employed, that should
                 be highlighted. Importantly, the school location data retrieved from OpenStreetMap (OSM)—while being the most comprehensive
-                source available—only covers a fraction of the world's schools—with considerable differences in coverage across
+                source available—only covers a fraction of the world's schools, with considerable differences in coverage across
                 regions and income groups. The School Risk Index' methodology takes steps to account for this by
                 reducing disproportionate influences of over- and underrepresentation through combining absolute and
                 relative observations, logarithmically transforming values and scaling them. Nevertheless, this imbalance
@@ -167,8 +169,10 @@ with page[1]:
                 Index does not include due to resource constraints.
     """)
 
-###########################
-# Context Page
+
+# ===========================
+# TAB 3 – Contextual data
+
 with page[2]:
 
 # === Charts ===
@@ -179,15 +183,15 @@ with page[2]:
                 The charts below provide an overview of the distribution of School Risk Index (SRI) values across World Bank regions and income groups. 
     """)
     
-    # Prepare data
+    # Preparing data
     df["REGION"] = df["REGION"].str.strip().str.title()
     df_bar = df.groupby(["REGION", "SRI_category"]).size().reset_index(name="count")
     df_bar = df_bar.pivot(index="REGION", columns="SRI_category", values="count").fillna(0)
     df_bar_pct = df_bar.div(df_bar.sum(axis=1), axis=0).reset_index()
 
-    # --- Sort regions by combined share of "Extremely High" and "High" ---
+    # Sorting regions by combined share of "Extremely High" and "High" for visualization purposes
     df_bar_pct["high_share"] = df_bar_pct.get("High", 0) + df_bar_pct.get("Extremely High", 0)
-    region_order = df_bar_pct.sort_values("high_share")["REGION"].tolist()  # ascending: lowest left, highest right
+    region_order = df_bar_pct.sort_values("high_share")["REGION"].tolist()
 
     df_melted = df_bar_pct.melt(id_vars="REGION", var_name="SRI Category", value_name="Percentage")
 
@@ -197,7 +201,7 @@ with page[2]:
     df_income_pct = df_income.div(df_income.sum(axis=1), axis=0).reset_index()
     df_income_melted = df_income_pct.melt(id_vars="INCOME GROUP", var_name="SRI Category", value_name="Percentage")
 
-    # Create side-by-side subplot
+    # Creating side-by-side subplot
     fig = make_subplots(
         rows=1, cols=2,
         shared_yaxes=True,
@@ -208,7 +212,6 @@ with page[2]:
     # Region bars (left)
     for category in SRI_categories:
         data = df_melted[df_melted["SRI Category"] == category]
-        # Ensure the order of regions
         data = data.set_index("REGION").reindex(region_order).reset_index()
         fig.add_trace(
             go.Bar(
@@ -227,7 +230,6 @@ with page[2]:
     # Income bars (right)
     for category in SRI_categories:
         data = df_income_melted[df_income_melted["SRI Category"] == category]
-        # Ensure the order of income groups
         data = data.set_index("INCOME GROUP").reindex(income_order).reset_index()
         fig.add_trace(
             go.Bar(
@@ -237,12 +239,12 @@ with page[2]:
                 marker=dict(color=SRI_colors[category]),
                 legendgroup=category,
                 legendrank=SRI_categories.index(category),
-                showlegend=False  # Only show once
+                showlegend=False 
             ),
             row=1, col=2
         )
 
-    # Final layout tweaks
+    # A few layout tweaks
     fig.update_layout(
         barmode="stack",
         height=500,
